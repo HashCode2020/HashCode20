@@ -5,6 +5,27 @@ class Library:
         self.shipping = shipping
 
 
+
+#Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
+def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
+    diasDisponiblesDespuesRegistro = diasDisponibles - libreria.signupTime
+    puntuacion = 0
+    libroSeleccionado = 0
+
+    #mientras queden dias para registrar libros, se cogen los libros y se registran aumentando la puntuacion
+    while(diasDisponiblesDespuesRegistro > 0):
+        librosDisponiblesDia = libreria.shipping
+
+        while(librosDisponiblesDia > 0):
+            puntuacion += libreria.books[libroSeleccionado]
+            libroSeleccionado += 1
+            librosDisponiblesDia -= 1
+
+        diasDisponiblesDespuesRegistro -= 1
+
+    return puntuacion
+
+
 # Leer archivo
 f = open('a_example.txt')
 read = f.read()
