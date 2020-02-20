@@ -27,14 +27,13 @@ class Book:
 # return: devulve la libreria con mayor puntos/dia
 def mejorBiblioteca(bibliotecas, diasMax):
     puntosMax = 0;
-    mejorBiblio = 0;
     for biblio in bibliotecas:
         puntos = puntosPotencialesConsigueLibreria(biblio, diasMax)
         if puntosMax < puntos:
             puntosMAx = puntos
             mejor_biblio = biblio;
 
-    return mejorBiblio
+    return mejor_biblio
 
 
 
@@ -57,6 +56,25 @@ def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
         diasDisponiblesDespuesRegistro -= 1
 
     return puntuacion
+
+
+def escogeLibros(libreria, diasDisponibles):
+    librosSeleccionados=[]
+    diasDisponiblesDespuesRegistro = diasDisponibles - libreria.signupTime
+    libroSeleccionado = 0
+
+    while (diasDisponiblesDespuesRegistro > 0):
+        librosDisponiblesDia = libreria.shipping
+
+        while (librosDisponiblesDia > 0):
+            librosSeleccionados.append(libreria.books[libroSeleccionado])
+
+            if libroSeleccionado < libreria.numBooks - 1:
+                libroSeleccionado += 1
+            librosDisponiblesDia -= 1
+
+        diasDisponiblesDespuesRegistro -= 1
+    return librosSeleccionados
 
 
 # Leer archivo
@@ -88,5 +106,22 @@ for i in range(0, numLibraries + 1, +2):
 for i in libraries:
     print("{0}\r\n".format(i))
 
-print(mejorBiblioteca(libraries, numDays))
-print(books)
+
+###MAIN
+
+libreriasOrdenadas = []
+resultado = []
+
+while numDays>0 and len(libraries)>0:
+
+    libreriaEscogida = mejorBiblioteca(libraries, numDays)
+    resultado[libreriaEscogida] = escogeLibros(libreriaEscogida,numDays)
+    libreriasResultado = Library(libreriaEscogida.id, libreriaEscogida)
+
+    #eliminamos lo que escogimos
+    libraries.remove(libreriasOrdenadas[-1])
+    numDays-=libreriasOrdenadas[-1].signupTime
+
+
+print(libreriasOrdenadas)
+#print(books)
