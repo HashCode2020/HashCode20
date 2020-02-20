@@ -9,6 +9,22 @@ class Library:
         return "Libros {0} tiempo registro {1} tiempo envio {2} libros {3}".format(self.numBooks, self.signupTime,
                                                                                    self.shipping, self.books)
 
+# librerias: Array de librerias
+# diasMax: Dias restantes para escanear libros
+# return: devulve la libreria con mayor puntos/dia
+def mejorBiblioteca(bibliotecas, diasMax):
+    puntosMax = 0;
+    mejorBiblio = 0;
+    for biblio in bibliotecas:
+        puntos = puntosPotencialesConsigueLibreria(biblio, diasMax)
+        if puntosMax < puntos:
+            puntosMAx = puntos
+            mejor_biblio = biblio;
+
+    return mejorBiblio
+
+
+
 
 # Leer archivo
 f = open('a_example.txt')
