@@ -33,9 +33,10 @@ class Book:
 # return: devulve la libreria con mayor puntos/dia
 def mejorBiblioteca(bibliotecas, diasMax):
     puntosMax = 0;
+    puntos=0
     for biblio in bibliotecas:
         puntos = puntosPotencialesConsigueLibreria(biblio, diasMax)
-        if puntosMax < puntos:
+        if puntosMax <= puntos:
             puntosMax = puntos
             mejor_biblio = biblio;
 
@@ -102,7 +103,7 @@ def escogeLibros(libreria, diasDisponibles):
 
 
 # Leer archivo
-f = open('a_example.txt')
+f = open('f_libraries_of_the_world.txt')
 read = f.read()
 array = read.split("\n")
 
