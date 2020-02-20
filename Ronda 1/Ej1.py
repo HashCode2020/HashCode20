@@ -44,6 +44,23 @@ def mejorBiblioteca(bibliotecas, diasMax):
 
 
 #Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
+def printToFile(bibliotecas):
+    documento = []
+    documento.append(str(len(bibliotecas)))
+    for i in bibliotecas:
+        documento.append(str(i.id) + " " + str(len(i.books)))
+        strLibros = ""
+        for j in i.books:
+            strLibros = strLibros + " " + str(j.id)
+        documento.append(strLibros[1:])
+
+    f = open("solution1.txt", "w")
+    toWrite = str.join("\n", [str(x) for x in documento])
+    f.write(str(len(array)) + "\n" + toWrite)
+    f.close()
+
+
+# Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
 def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
     diasDisponiblesDespuesRegistro = diasDisponibles - libreria.signupTime
     puntuacion = 0
@@ -110,8 +127,7 @@ for i in range(0, numLibraries + 1, +2):
     libraries.append(Library(idCutreParaBibliotecas, numBooks, signupTime, shipping, lista_books))
     idCutreParaBibliotecas = idCutreParaBibliotecas + 1
 
-for i in libraries:
-    print("{0}\r\n".format(i))
+printToFile(libraries)
 
 
 ###MAIN
