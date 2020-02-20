@@ -1,9 +1,9 @@
 class Library:
     def __init__(self, id, numBooks, signupTime, shipping, books):
         self.id = id
-        self.numBooks = numBooks
-        self.signupTime = signupTime
-        self.shipping = shipping
+        self.numBooks = int(numBooks)
+        self.signupTime = int(signupTime)
+        self.shipping = int(shipping)
         self.books = books
 
     def __str__(self) -> str:
@@ -16,7 +16,7 @@ class Library:
 class Book:
     def __init__(self, id, puntos):
         self.id = id
-        self.puntos = puntos
+        self.puntos = int(puntos)
 
     def __str__(self) -> str:
         return "Libro {0}: {1}".format(self.id, self.puntos)
@@ -37,19 +37,21 @@ def mejorBiblioteca(bibliotecas, diasMax):
     return mejorBiblio
 
 
-# Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
+
+#Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
 def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
     diasDisponiblesDespuesRegistro = diasDisponibles - libreria.signupTime
     puntuacion = 0
     libroSeleccionado = 0
 
-    # mientras queden dias para registrar libros, se cogen los libros y se registran aumentando la puntuacion
-    while (diasDisponiblesDespuesRegistro > 0):
+    #mientras queden dias para registrar libros, se cogen los libros y se registran aumentando la puntuacion
+    while(diasDisponiblesDespuesRegistro > 0):
         librosDisponiblesDia = libreria.shipping
 
         while (librosDisponiblesDia > 0):
-            puntuacion += libreria.books[libroSeleccionado]
-            libroSeleccionado += 1
+            puntuacion += int(libreria.books[libroSeleccionado].puntos)
+            if libroSeleccionado < libreria.numBooks - 1:
+                libroSeleccionado += 1
             librosDisponiblesDia -= 1
 
         diasDisponiblesDespuesRegistro -= 1
@@ -86,4 +88,5 @@ for i in range(0, numLibraries + 1, +2):
 for i in libraries:
     print("{0}\r\n".format(i))
 
+print(mejorBiblioteca(libraries, numDays))
 print(books)
