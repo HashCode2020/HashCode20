@@ -42,8 +42,7 @@ def mejorBiblioteca(bibliotecas, diasMax):
     return mejor_biblio
 
 
-
-#Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
+# Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
 def printToFile(bibliotecas):
     documento = []
     print("Longitud de bibliotecas es: ", len(bibliotecas))
@@ -57,7 +56,7 @@ def printToFile(bibliotecas):
 
     f = open("solution1.txt", "w")
     toWrite = str.join("\n", [str(x) for x in documento])
-    f.write( toWrite)
+    f.write(toWrite)
     f.close()
 
 
@@ -67,12 +66,12 @@ def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
     puntuacion = 0
     libroSeleccionado = 0
 
-    #mientras queden dias para registrar libros, se cogen los libros y se registran aumentando la puntuacion
-    while(diasDisponiblesDespuesRegistro > 0):
+    # mientras queden dias para registrar libros, se cogen los libros y se registran aumentando la puntuacion
+    while (diasDisponiblesDespuesRegistro > 0):
         librosDisponiblesDia = libreria.shipping
 
         while (librosDisponiblesDia > 0):
-            puntuacion += int(libreria.books[libroSeleccionado].puntos)
+            puntuacion += libreria.books[libroSeleccionado].puntos
             if libroSeleccionado < libreria.numBooks - 1:
                 libroSeleccionado += 1
             librosDisponiblesDia -= 1
@@ -83,7 +82,7 @@ def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
 
 
 def escogeLibros(libreria, diasDisponibles):
-    librosSeleccionados=[]
+    librosSeleccionados = []
     diasDisponiblesDespuesRegistro = diasDisponibles - libreria.signupTime
     libroSeleccionado = 0
 
@@ -94,7 +93,6 @@ def escogeLibros(libreria, diasDisponibles):
             librosSeleccionados.append(libreria.books[libroSeleccionado])
             libroSeleccionado += 1
 
-
             librosDisponiblesDia -= 1
 
         diasDisponiblesDespuesRegistro -= 1
@@ -102,7 +100,7 @@ def escogeLibros(libreria, diasDisponibles):
 
 
 # Leer archivo
-f = open('a_example.txt')
+f = open('e_so_many_books.txt')
 read = f.read()
 array = read.split("\n")
 
@@ -128,34 +126,26 @@ for i in range(0, numLibraries + 1, +2):
     libraries.append(Library(idCutreParaBibliotecas, numBooks, signupTime, shipping, lista_books))
     idCutreParaBibliotecas = idCutreParaBibliotecas + 1
 
-printToFile(libraries)
-
-
 ###MAIN
 
 libreriasOrdenadas = []
 resultado = []
 
-while numDays>0 and len(libraries) > 0:
-
+while numDays > 0 and len(libraries) > 0:
     libreriaEscogida = mejorBiblioteca(libraries, numDays)
     librosEscogidos = escogeLibros(libreriaEscogida, numDays)
-
 
     libreriasResultado = Library(libreriaEscogida.id, len(librosEscogidos), libreriaEscogida.signupTime,
                                  libreriaEscogida.shipping, librosEscogidos)
 
     resultado.append(libreriasResultado)
-    #eliminamos lo que escogimos
+    # eliminamos lo que escogimos
 
     print(libraries)
 
     libraries.remove(libreriaEscogida)
     numDays -= libreriaEscogida.signupTime
 
-
-
-
 print(libreriasOrdenadas)
 printToFile(resultado)
-#print(books)
+# print(books)
