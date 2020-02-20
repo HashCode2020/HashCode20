@@ -33,16 +33,18 @@ class Book:
 # return: devulve la libreria con mayor puntos/dia
 def mejorBiblioteca(bibliotecas, diasMax):
     puntosMax = 0;
+    puntos=0
     for biblio in bibliotecas:
         puntos = puntosPotencialesConsigueLibreria(biblio, diasMax)
-        if puntosMax < puntos:
+        if puntosMax <= puntos:
             puntosMax = puntos
             mejor_biblio = biblio;
 
     return mejor_biblio
 
 
-# Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
+
+#Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
 def printToFile(bibliotecas):
     documento = []
     print("Longitud de bibliotecas es: ", len(bibliotecas))
@@ -71,7 +73,7 @@ def puntosPotencialesConsigueLibreria(libreria, diasDisponibles):
         librosDisponiblesDia = libreria.shipping
 
         while (librosDisponiblesDia > 0):
-            puntuacion += libreria.books[libroSeleccionado].puntos
+            puntuacion += int(libreria.books[libroSeleccionado].puntos)
             if libroSeleccionado < libreria.numBooks - 1:
                 libroSeleccionado += 1
             librosDisponiblesDia -= 1
@@ -100,7 +102,7 @@ def escogeLibros(libreria, diasDisponibles):
 
 
 # Leer archivo
-f = open('e_so_many_books.txt')
+f = open('a_example.txt')
 read = f.read()
 array = read.split("\n")
 
@@ -126,6 +128,7 @@ for i in range(0, numLibraries + 1, +2):
     libraries.append(Library(idCutreParaBibliotecas, numBooks, signupTime, shipping, lista_books))
     idCutreParaBibliotecas = idCutreParaBibliotecas + 1
 
+
 ###MAIN
 
 libreriasOrdenadas = []
@@ -146,6 +149,5 @@ while numDays > 0 and len(libraries) > 0:
     libraries.remove(libreriaEscogida)
     numDays -= libreriaEscogida.signupTime
 
-print(libreriasOrdenadas)
+
 printToFile(resultado)
-# print(books)
