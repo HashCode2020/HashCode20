@@ -7,7 +7,14 @@ class Library:
 
     def __str__(self) -> str:
         return "Libros {0} tiempo registro {1} tiempo envio {2} libros {3}".format(self.numBooks, self.signupTime,
-                                                                                   self.shipping, self.books)
+                                                                                   self.shipping, len(self.books))
+class Book:
+    def __init__(self, id, puntos):
+        self.id = id
+        self.puntos = puntos
+
+    def __str__(self) -> str:
+        return "Libro {0}: {1}".format(self.id, self.puntos)
 
 # librerias: Array de librerias
 # diasMax: Dias restantes para escanear libros
@@ -64,9 +71,13 @@ for i in range(0, numLibraries+1, +2):
     signupTime = array[i].split()[1]
     shipping = array[i].split()[2]
     books = array[(i + 1)]
-    libraries.append(Library(numBooks, signupTime, shipping, books))
-    print(i)
-    print(numLibraries)
+    lista_books = []
+
+    for book in books:
+        if book != ' ':
+            lista_books.append(Book(int(book), score[int(book)-1]))
+
+    libraries.append(Library(numBooks, signupTime, shipping, lista_books))
 
 for i in libraries:
     print("{0}\r\n".format(i))
