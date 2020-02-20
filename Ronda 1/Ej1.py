@@ -36,7 +36,7 @@ def mejorBiblioteca(bibliotecas, diasMax):
     for biblio in bibliotecas:
         puntos = puntosPotencialesConsigueLibreria(biblio, diasMax)
         if puntosMax < puntos:
-            puntosMAx = puntos
+            puntosMax = puntos
             mejor_biblio = biblio;
 
     return mejor_biblio
@@ -46,6 +46,7 @@ def mejorBiblioteca(bibliotecas, diasMax):
 #Funcion que define los puntos que puede conseguir una libreria en funcion de los dias que quedan
 def printToFile(bibliotecas):
     documento = []
+    print("Longitud de bibliotecas es: ", len(bibliotecas))
     documento.append(str(len(bibliotecas)))
     for i in bibliotecas:
         documento.append(str(i.id) + " " + str(len(i.books)))
@@ -56,7 +57,7 @@ def printToFile(bibliotecas):
 
     f = open("solution1.txt", "w")
     toWrite = str.join("\n", [str(x) for x in documento])
-    f.write(str(len(array)) + "\n" + toWrite)
+    f.write( toWrite)
     f.close()
 
 
@@ -89,11 +90,11 @@ def escogeLibros(libreria, diasDisponibles):
     while (diasDisponiblesDespuesRegistro > 0):
         librosDisponiblesDia = libreria.shipping
 
-        while (librosDisponiblesDia > 0):
+        while (librosDisponiblesDia > 0 and libroSeleccionado < libreria.numBooks - 1):
             librosSeleccionados.append(libreria.books[libroSeleccionado])
+            libroSeleccionado += 1
 
-            if libroSeleccionado < libreria.numBooks - 1:
-                libroSeleccionado += 1
+
             librosDisponiblesDia -= 1
 
         diasDisponiblesDespuesRegistro -= 1
@@ -135,16 +136,26 @@ printToFile(libraries)
 libreriasOrdenadas = []
 resultado = []
 
-while numDays>0 and len(libraries)>0:
+while numDays>0 and len(libraries) > 0:
 
     libreriaEscogida = mejorBiblioteca(libraries, numDays)
-    resultado[libreriaEscogida] = escogeLibros(libreriaEscogida,numDays)
-    libreriasResultado = Library(libreriaEscogida.id, libreriaEscogida)
+    librosEscogidos = escogeLibros(libreriaEscogida, numDays)
 
+
+    libreriasResultado = Library(libreriaEscogida.id, len(librosEscogidos), libreriaEscogida.signupTime,
+                                 libreriaEscogida.shipping, librosEscogidos)
+
+    resultado.append(libreriasResultado)
     #eliminamos lo que escogimos
-    libraries.remove(libreriasOrdenadas[-1])
-    numDays-=libreriasOrdenadas[-1].signupTime
+
+    print(libraries)
+
+    libraries.remove(libreriaEscogida)
+    numDays -= libreriaEscogida.signupTime
+
+
 
 
 print(libreriasOrdenadas)
+printToFile(resultado)
 #print(books)
