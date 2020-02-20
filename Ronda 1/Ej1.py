@@ -18,6 +18,12 @@ class Book:
         self.id = id
         self.puntos = int(puntos)
 
+    def __lt__(self, other):
+        return self.puntos < other.puntos
+
+    def __gt__(self, other):
+        return self.puntos > other.puntos
+
     def __str__(self) -> str:
         return "Libro {0}: {1}".format(self.id, self.puntos)
 
@@ -100,6 +106,7 @@ for i in range(0, numLibraries + 1, +2):
     for book in books:
         lista_books.append(Book(int(book), score[int(book) - 1]))
 
+    lista_books.sort(reverse=True)
     libraries.append(Library(idCutreParaBibliotecas, numBooks, signupTime, shipping, lista_books))
     idCutreParaBibliotecas = idCutreParaBibliotecas + 1
 
